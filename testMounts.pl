@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w 
 
 use strict;
-use Mounts;
+use Linux::Mounts;
 
 my $mtd  = Linux::Mounts->new();
 my $list = $mtd->list_mounts();

@@ -72,6 +72,8 @@ sub stat_mount {}
 
 1;
 
+__END__
+
 =head1 NAME 
 
 Linux::Mounts - perl module providing object oriented interface to /proc/mounts
@@ -100,7 +102,8 @@ $mtd->show_mount();
 
 =head1 DESCRIPTION
 
-This module provides an interface to the file /proc/mounts. The implementation attempts to resemble to the "mount" linux command.
+This module provides an interface to the file /proc/mounts. The implementation 
+attempts to resemble to the "mount" linux command.
 
 =head2 METHODS
 
@@ -122,6 +125,8 @@ Stephane Chmielewski 	<snck@free.fr>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2004 Stephane Chmielewski. All rights reserved. This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself. 
+Copyright (C) 2004 Stephane Chmielewski. All rights reserved. 
+This program is free software; you can redistribute it and/or modify it 
+under the same terms as Perl itself. 
 
 =cut
