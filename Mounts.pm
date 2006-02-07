@@ -13,23 +13,23 @@ our @ISA = qw(Exporter DynaLoader);
 our $VERSION = 0.2;
 
 sub new {
-	my ($proto, $file) = shift;
+	my($proto, $file) = shift;
 	my $class = ref($proto) || $proto;
-	my $self = { };
+	my $self  = { };
 
 	$file ||= '/proc/mounts';
 
-	if ( -e $file || -f $file ) {
-		if ( open (MOUNTS, $file) ) {
+	if (-e $file || -f $file) {
+		if (open (MOUNTS, $file)) {
 			$self->{_private}->{num_mounts} = 0;
-			while ( <MOUNTS> ) {
+			while (<MOUNTS>) {
 				chomp;
 				my $cpt = $self->{_private}->{num_mounts};
-				push (@{ $self->{_mountinfo}->[$cpt] }, split(/\s/));
+				push(@{ $self->{_mountinfo}->[$cpt] }, split(/\s/));
 				$self->{_private}->{num_mounts}++;
 			}
 		}
-		close (MOUNTS);
+		close(MOUNTS);
 	}
 
 	bless $self, $class;
@@ -38,27 +38,27 @@ sub new {
 }
 
 sub num_mounts {
-	my ($self) = @_;
+	my($self) = @_;
 
 	return $self->{_private}->{num_mounts};
 }
 
 sub list_mounts {
-	my ($self) = @_;
+	my($self) = @_;
 
 	return $self->{_mountinfo};
 }
 
 sub show_mount {
-	my ($self) = @_;
-	my (@lst_f);
+	my($self) = @_;
+	my(@lst_f);
 
-	for ( my $i = 0; $i < $self->{_private}->{num_mounts}; $i++ ) {
-        	for ( my $j = 0; $j < $#{ $self->{_mountinfo} }; $j++ ) {
-			push (@lst_f, $self->{_mountinfo}->[$i][$j]);
+	for (my $i = 0; $i < $self->{_private}->{num_mounts}; $i++) {
+        	for (my $j = 0; $j < $#{ $self->{_mountinfo} }; $j++) {
+			push(@lst_f, $self->{_mountinfo}->[$i][$j]);
         	}
 		write;
-		undef (@lst_f);
+		undef(@lst_f);
 	}
 
 	format STDOUT =
@@ -80,25 +80,25 @@ Linux::Mounts - perl module providing object oriented interface to /proc/mounts
 
 =head1 SYNOPSIS
 
-use Linux::Mounts;
+	use Linux::Mounts;
 
-my $mtd  = Linux::Mounts->new();
-my $list = $mtd->list_mounts();
+	my $mtd  = Linux::Mounts->new();
+	my $list = $mtd->list_mounts();
 
-print "Number of mounted file systems : ", $mtd->num_mounts(), "\n\n";
+	print "Number of mounted file systems : ", $mtd->num_mounts(), "\n\n";
 
-print "List of mounted file systems :\n";
-for ( my $i = 0; $i < $mtd->num_mounts(); $i++ ) {
-	for ( my $j = 0; $j < $#{ $list }; $j++ ) {
-		printf ("%-15s", $list->[$i][$j]);
+	print "List of mounted file systems :\n";
+	for (my $i = 0; $i < $mtd->num_mounts(); $i++) {
+		for (my $j = 0; $j < $#{ $list }; $j++) {
+			printf("%-15s", $list->[$i][$j]);
+		}
+		print "\n";
 	}
-	print "\n";
-}
 
-# or simplier ...
+	### or simplier ...
 
-print "\nList of mounted file systems :\n";
-$mtd->show_mount();
+	print "\nList of mounted file systems :\n";
+	$mtd->show_mount();
 
 =head1 DESCRIPTION
 
